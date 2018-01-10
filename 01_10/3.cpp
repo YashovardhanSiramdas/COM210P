@@ -59,11 +59,12 @@ class ADT
 			while(b<=e)
 			{
 				m=(b+e)/2;
-				if(key==a[m])
+				if(x==a[m])
 				{
-					break;		
+					cout<<x<<" is found\n";
+					return;		
 				}	
-				else if(key<a[m])
+				else if(x<a[m])
 				{
 					e=m-1;
 				}
@@ -72,9 +73,10 @@ class ADT
 					b=m+1;
 				}
 			}
+			cout<<x<<" is not found\n";
 	
-			return c;
 		}
+		
 
 };
 
@@ -85,5 +87,11 @@ int main()
 	obj.insert();
 	obj.insert();
 	obj.insert();
+	obj.insert();
+	obj.insert();
 	obj.display();
+	obj.bsearch(4);
+	obj.bsearch(6);
+	obj.bsearch(3);
+	obj.bsearch(2);
 }
