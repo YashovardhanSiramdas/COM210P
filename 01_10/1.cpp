@@ -1,5 +1,14 @@
+/*
+Author:- Yashovardhan Siramdas
+CED16I028
+
+Lab Session 2, 10-01-18
+Finding the values of n(input size) for which insertion sort beats merge sort
+*/
+
 #include <iostream>
 #include <cmath>
+
 using namespace std;
 
 class comparisions

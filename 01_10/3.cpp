@@ -1,13 +1,26 @@
+/*
+Author:- Yashovardhan Siramdas
+CED16I028
+
+Lab Session 2, 10-01-18
+Implementation of Dictionary ADT using class
+Supports Insert, Search, Delete, Display Operations
+*/
+
 #include <iostream>
 #include <cmath>
+
 using namespace std;
 
 class ADT
 {
 	private:
-		int asize=-1;
+		int asize;
 		int a[100];
+
 	public:
+		ADT() : asize(-1) {}
+
 		void swap(int* a, int* b)
 		{
     		int t = *a;
@@ -21,7 +34,7 @@ class ADT
     		int i = (low - 1); 
  	
 
-    		for (int j = low; j <= high- 1; j++)
+    		for (int j = low; j <= high - 1; j++)
     		{
         		if (a[j] <= pivot)
         		{
@@ -42,74 +55,65 @@ class ADT
         		quickSort(a, pi + 1, high);
     		}
 		}
-		void insert()
+
+		void insert(int key)
 		{
 			asize++;
-			cout<<"Enter integer to be inserted\n";
-			cin>>a[asize];
-			quickSort(a,0,asize);
+			a[asize] = key;
+			quickSort(a, 0, asize);
 		}
+
 		void display()
 		{
-			for(int i=0;i<=asize;i++)
-				cout<<a[i]<<endl;
+			for (int i = 0; i <= asize; i++)
+				cout<<a[i]<<" ";
+
+			cout<<endl;
 		}
-		void bsearch(int x)
+
+		void binarySearch(int key)
 		{
-			int b=0,e=asize,m;
-			while(b<=e)
+			int b = 0, e = asize, m;
+			while (b <= e)
 			{
-				m=(b+e)/2;
-				if(x==a[m])
+				m = (b + e) / 2;
+				if (key == a[m])
 				{
-					cout<<x<<" is found\n";
+					cout<<key<<" is found \n";
 					return;		
 				}	
-				else if(x<a[m])
-				{
-					e=m-1;
-				}
+				else if (key < a[m])
+					e = m - 1;
 				else
-				{
-					b=m+1;
-				}
+					b = m + 1;
 			}
-			cout<<x<<" is not found\n";
+			cout<<key<<" is not found \n";
 	
 		}
-		void del(int x)
+
+		void del(int key)
 		{
-			int b=0,e=asize,m;
-			while(b<=e)
+			int b = 0, e = asize, m;
+			while (b <= e)
 			{
-				m=(b+e)/2;
-				if(x==a[m])
+				m = (b + e) / 2;
+				if (key == a[m])
 				{
-					for(int i=m;i<=asize;i++)
-					{
-						if(i!=asize)
-						{
-							a[i]=a[i+1];	
-						}
+					for (int i = m; i <= asize; i++)
+						if (i != asize)
+							a[i] = a[i + 1];
 						
-					}
 					asize--;
-					cout<<x<<" is found and deleted\n";
+					cout<<key<<" is found and deleted \n";
 					return;		
 				}	
-				else if(x<a[m])
-				{
-					e=m-1;
-				}
+				else if (key < a[m])
+					e = m - 1;
 				else
-				{
-					b=m+1;
-				}
+					b = m + 1;
 			}
-			cout<<x<<" is not found,hence can't be deleted\n";
+			cout<<key<<" is not found,hence can't be deleted \n";
 		}
-		
-
 };
 
 int main()
@@ -117,30 +121,30 @@ int main()
 	ADT obj;
 	while(1)
 	{
-		int t;
-		cout<<"1.Insert 2.Search 3.Delete 4.Display\n";
+		int t, key;
+		cout<<"1.Insert \n2.Search \n3.Delete \n4.Display \n5.Exit \n";
 		cin>>t;
 		switch(t)
 		{
 			case 1: 
 			{
-				obj.insert();
+				cout<<"Enter Integer to be inserted \n";
+				cin>>key;
+				obj.insert(key);
 			}
 			break;
 
 			case 2:
 			{
-				int key;
-				cout<<"Enter Key to be searched\n";
+				cout<<"Enter Integer to be searched \n";
 				cin>>key;
-				obj.bsearch(key);
+				obj.binarySearch(key);
 			}
 			break;
 
 			case 3:
 			{
-				int key;
-				cout<<"Enter Key to be deleted\n";
+				cout<<"Enter Integer to be deleted \n";
 				cin>>key;
 				obj.del(key);
 			}
@@ -148,12 +152,16 @@ int main()
 
 			case 4:
 			{
-				cout<<"Elements in the array\n";
+				cout<<"Integers in the array:- \n";
 				obj.display();
 			}
 			break;
 
+			case 5:
+			{
+				return (0);
+			}
+			break;
 		}
 	}
-	
 }
