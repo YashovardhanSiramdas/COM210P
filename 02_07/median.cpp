@@ -13,7 +13,6 @@ class student
 		int getRoll();
 
 }s[20];
-
 void student::readData()
 {
 	cout<<"Enter roll\n";
