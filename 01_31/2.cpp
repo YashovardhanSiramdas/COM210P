@@ -1,3 +1,7 @@
+/*
+Bucket Sort with a struct 
+*/
+
 #include <iostream>
 #include <stdlib.h>
 using namespace std;

@@ -117,7 +117,7 @@ int MCSSS::divideAndConquer(int beg, int end)
 	}
 	csum=0;
 
-	for (int i = mid; i <= end; i++)
+	for (int i = mid+1; i <= end; i++)
 	{
 		csum = csum + a[i];
 		if (rsum < csum)
