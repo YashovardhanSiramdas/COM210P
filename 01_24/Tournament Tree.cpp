@@ -4,118 +4,73 @@ CED16I028
 
 Lab Session 4, 24-01-18
 Tournament Tree
-Find Min,Max in exactly (3*N)/2 comparisions where N is size of the array.N is in the form 2^k
+Find Min,Max in exactly (1.5 * N) -2 comparisions where N is size of the array.N is in the form 2^k
 */
 
-#include <iostream>
+#include<iostream>
 using namespace std;
 
-class Tournament
+struct node
 {
-	private:
-
-	int a[64], size;
-
-	public:
-
-		void size_init();
-		void read();
-		void minmax();
-
-};
-
-void Tournament::size_init()
+  int min;
+  int max;
+};  
+ 
+struct node getMinMax(int arr[], int low, int high)
 {
-	cout<<"Enter size of array(Should be in the form 2^k)\n";
-	cin>>size;
-}
+  struct node minmax, mml, mmr;       
+  int mid;
 
-void Tournament::read()
-{
-	cout<<"Enter "<<size<<" Integers\n";
-	for (int i = 0; i < size; i++)
-		cin>>a[i];
-}
+  if (low == high) {
+     minmax.max = arr[low];
+     minmax.min = arr[low];     
+     return (minmax);
+  }    
 
-void Tournament::minmax()
-{
-	int i = 0;
-	int minc = size, maxc = 0;;
-	while (i < size)
-	{
-		if (a[i] < a[i + 1])
-		{
-			a[minc] = a[i];
-			minc++;
-			a[maxc] = a[i + 1];
-			maxc++;
-		}
-		else
-		{
-			a[minc] = a[i + 1];
-			minc++;
-			a[maxc] = a[i];
-			maxc++;
-		}
-		i=i+2;
-	}
+  if (high == low + 1) {
+     if (arr[low] > arr[high]) {  
+        minmax.max = arr[low];
+        minmax.min = arr[high];
+     }  
+     else {
+        minmax.max = arr[high];
+        minmax.min = arr[low];
+     }  
+     return (minmax);
+  }
 
-	int max1 = maxc;
-	while (maxc != 1)
-	{
-		int counter = 0;
-		for (i = 0; i <maxc; i = i + 2)
-		{
-			if (a[i] < a[i + 1])
-			{
-				a[counter] = a[i + 1];
-				counter++;
-			}
-			else
-			{
-				a[counter] = a[i];
-				counter++;
-			}
-		}
-		maxc = maxc / 2;
-	}
-	cout<<"Max: "<<a[0]<<endl;
-	
+  mid = (low + high) / 2;  
+  mml = getMinMax(arr, low, mid);
+  mmr = getMinMax(arr, mid + 1, high);  
 
-	int j = 0;
-	for( i =size; i < minc; i++)
-	{
-		a[j] = a[i];
-		j++;
-	}
+  if (mml.min < mmr.min)
+    minmax.min = mml.min;
+  else
+    minmax.min = mmr.min;     
 
-	while (max1 != 1)
-	{
-		int counter = 0;
-		for (i = 0; i < max1; i = i + 2)
-		{
-			if (a[i] > a[i + 1])
-			{
-				a[counter] = a[i + 1];
-				counter++;
-			}
-			else
-			{
-				a[counter] = a[i];
-				counter++;
-			}
-		}
-		max1 = max1 / 2;
-	}
-	cout<<"Min: "<<a[0]<<endl;
+  if (mml.max > mmr.max)
+    minmax.max = mml.max;
+  else
+    minmax.max = mmr.max;     
+  
+  return (minmax);
 }
 
 int main()
 {
-	Tournament T;
-	T.size_init();
-	T.read();
-	T.minmax();
+  int arr_size;
+  cout<<"Enter size of the Array: \n";
+  cin>>arr_size;
+  int arr[arr_size];
+  cout<<"Enter "<<arr_size<<" Integers\n";
+  int i;
+  for (i = 0; i < arr_size; ++i)
+    cin>>arr[i];
 
-	return (0);
+  struct node minmax = getMinMax(arr, 0, arr_size - 1);
+  cout<<"Min: "<<minmax.min<<endl;
+  cout<<"Max: "<<minmax.max<<endl;
+  
+  return (0);
 }
+
