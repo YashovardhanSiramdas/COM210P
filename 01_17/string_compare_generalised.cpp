@@ -3,7 +3,7 @@ Author:- Yashovardhan Siramdas
 CED16I028
 
 Lab Session 3, 17-01-18
-Given a String S1 of length "N" and another String S2 of length "M",find whether S1 contains S2 in O(N+M).
+Given a String S1 of length "N" and another String S2 of length "M",find whether S1 contains S2 in O(N+M).Extra Credit
 */
 
 #include <iostream>
