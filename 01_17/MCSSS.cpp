@@ -1,5 +1,3 @@
-//BUG IN FINDING BEG,END INDICES FOR DIVIDE AND CONQUER
-
 /*
 Author:- Yashovardhan Siramdas
 CED16I028
@@ -105,50 +103,34 @@ int MCSSS::divideAndConquer(int beg, int end)
 	int rsp = divideAndConquer(mid + 1, end);
 
 	int csum = 0, lsum = 0, rsum = 0;
-	int stl = mid, enr = mid;
+
 	for (int i = mid; i >= beg; i--)
 	{
 		csum = csum + a[i];
 		if (lsum < csum)
 		{
 			lsum = csum;
-			stl = i;
+			DCBeg = i;
 		}
 	}
 	csum=0;
 
-	for (int i = mid+1; i <= end; i++)
+	for (int i = mid + 1; i <= end; i++)
 	{
 		csum = csum + a[i];
 		if (rsum < csum)
 		{
 			rsum = csum;
-			enr = i;
+			DCEnd = i;
 		}
 	}
-	int k = max(max(lsp, lsum + rsum - a[mid]), max(lsum + rsum - a[mid], rsp));
-	if (k == lsp)
-	{
-		DCBeg = beg;
-		DCEnd = mid - 1;
-	}
-	else if (k==rsp)
-	{
-		DCBeg = mid + 1;
-		DCEnd = end;
-	}
-	else
-	{
-		DCBeg = stl;
-		DCEnd = enr;
-	}
 
-	return k;
+	return max(max(lsp, rsp), lsum + rsum);
 }
 
 int MCSSS::pruning()
 {
-    int msum = INT_MIN, csum = 0, k = 0;
+    int msum = 0, csum = 0, k = 0;
  
     for (int i = 0; i < n; i++)
     {
