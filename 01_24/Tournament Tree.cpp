@@ -14,34 +14,67 @@ struct node
 {
   int min;
   int max;
-};  
+};
+
+class Tournament
+{
+	private:
+
+	int a[64], size;
+
+	public:
+
+		void size_init();
+		void read();
+		int getSize();
+		struct node getMinMax(int low, int high);
+
+};
+
+void Tournament::size_init()
+{
+	cout<<"Enter size of array(Should be in the form 2^k)\n";
+	cin>>size;
+}
+
+void Tournament::read()
+{
+	cout<<"Enter "<<size<<" Integers\n";
+	for (int i = 0; i < size; i++)
+		cin>>a[i];
+}
+
+int Tournament::getSize()
+{
+	return size - 1;
+}
  
-struct node getMinMax(int arr[], int low, int high)
+struct node Tournament::getMinMax(int low, int high)
 {
   struct node minmax, mml, mmr;       
   int mid;
 
   if (low == high) {
-     minmax.max = arr[low];
-     minmax.min = arr[low];     
+     minmax.max = a[low];
+     minmax.min = a[low];     
      return (minmax);
   }    
 
   if (high == low + 1) {
-     if (arr[low] > arr[high]) {  
-        minmax.max = arr[low];
-        minmax.min = arr[high];
+     if (a[low] > a[high]) {  
+        minmax.max = a[low];
+        minmax.min = a[high];
      }  
      else {
-        minmax.max = arr[high];
-        minmax.min = arr[low];
+        minmax.max = a[high];
+        minmax.min = a[low];
      }  
      return (minmax);
   }
 
   mid = (low + high) / 2;  
-  mml = getMinMax(arr, low, mid);
-  mmr = getMinMax(arr, mid + 1, high);  
+  mml = getMinMax(low, mid);
+  mmr = getMinMax(mid + 1, high);  
 
   if (mml.min < mmr.min)
     minmax.min = mml.min;
@@ -58,18 +91,14 @@ struct node getMinMax(int arr[], int low, int high)
 
 int main()
 {
-  int arr_size;
-  cout<<"Enter size of the Array: \n";
-  cin>>arr_size;
-  int arr[arr_size];
-  cout<<"Enter "<<arr_size<<" Integers\n";
-  int i;
-  for (i = 0; i < arr_size; ++i)
-    cin>>arr[i];
+  
+  Tournament T;
+  T.size_init();
+  T.read();
+  struct node minmax = T.getMinMax(0, T.getSize());
 
-  struct node minmax = getMinMax(arr, 0, arr_size - 1);
-  cout<<"Min: "<<minmax.min<<endl;
-  cout<<"Max: "<<minmax.max<<endl;
+  cout<<"Minimum Integer in the Array: "<<minmax.min<<endl;
+  cout<<"Maximum Integer in the Array: "<<minmax.max<<endl;
   
   return (0);
 }
