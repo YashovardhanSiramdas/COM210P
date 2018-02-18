@@ -1,93 +1,119 @@
+/*
+Author:- Yashovardhan Siramdas
+CED16I028
+
+Lab Session 5, 31-01-18
+Bucket Sort
+Use Bucket Sort to sort the structs according to Roll No.
+*/
+
 #include <iostream>
 #include <stdlib.h>
 using namespace std;
 
+struct node
+{
+	int roll;
+	int marks;
+	char name[15];
+	int year;
+	struct node *link;
+};
+
 class bucket_sort
 {
 	private:
-		int n,a[100],max;
-		struct node
-		{
-			int key;
-			struct node* link;
-		};
-		struct node *head[20];
-		struct node *tail[20];
-
+		struct node *data;
 	public:
-		void size_init();
-		void read_input();
-		void getMax();
-		void insert_keys();
-		void display();
-};
+		void data_init();
+		void insert_data();
+		int getRoll();
+		struct node *getAddress();
 
-void bucket_sort::size_init()
+}S[15];
+
+void bucket_sort::data_init()
 {
-	cout<<"Enter size of Array\n";
+	data = (struct node *)malloc(sizeof(struct node));
+}
+
+void bucket_sort::insert_data()
+{
+	cout<<"Enter Roll No. : ";
+	cin>>data->roll;
+	cout<<"Enter Marks : ";
+	cin>>data->marks;
+	cout<<"Enter Name : ";
+	cin>>data->name;
+	cout<<"Enter Year : ";
+	cin>>data->year;
+}
+
+int bucket_sort::getRoll()
+{
+	return data->roll;
+}
+
+struct node * bucket_sort:: getAddress()
+{
+	return data;
+}
+
+int getMax(int n)
+{
+	int x = S[0].getRoll();
+	for(int i = 1; i < n; i++)
+		if(S[i].getRoll() > x)
+			x = S[i].getRoll();
+	return x;
+}
+
+int main()
+{
+	int n;
+	cout<<"Enter number of Records: ";
 	cin>>n;
-}
-
-void bucket_sort::read_input()
-{
-	cout<<"Enter "<<n<<" Integers\n";
-	for(int i=0;i<n;i++)
-		cin>>a[i];
-}
-
-void bucket_sort::getMax()
-{
-	int x=a[0];
-	for(int i=1;i<n;i++)
-		if(a[i]>x)
-			x=a[i];
-	max=x;
-}
-
-void bucket_sort::insert_keys()
-{
-	for(int i=0;i<n;i++)
+	for(int i = 0; i < n; i++)
 	{
-		struct node *temp=(struct node *)malloc(sizeof(struct node));
-		if(head[a[i]]==NULL)
-		{
-			temp->key=a[i];
-			head[a[i]]=temp;
-			tail[a[i]]=temp;
-		}
+		S[i].data_init();
+		S[i].insert_data();
+	}
+	int k = getMax(n);
+	struct node *head[k + 1];
+	struct node *tail[k + 1];
+	for(int i = 0; i <= k; i++)
+	{
+		head[i]=tail[i]=NULL;
+	}
 
+	for(int i = 0; i < n; i++)
+	{
+		if(head[S[i].getRoll()] == NULL)
+		{
+			head[S[i].getRoll()] = tail[S[i].getRoll()] = S[i].getAddress();
+		}
 		else
 		{
-			temp->key=a[i];
-			tail[a[i]]->link=temp;
-			tail[a[i]]=temp;
+			tail[S[i].getRoll()]->link = S[i].getAddress();
+			tail[S[i].getRoll()] = S[i].getAddress();
 		}
 	}
-}
 
-void bucket_sort::display()
-{
-	for(int i=0;i<max+1;i++)
+	cout<<"Records in Sorted Order:-\n\n";
+	for(int i = 0; i <= k; i++)
 	{
-		if(head[i]!=NULL)
+		if(head[i] != NULL)
 		{
-			struct node *t=head[i];
-			while(t!=NULL)
+			struct node *t = head[i];
+			while(t != NULL)
 			{
-				cout<<t->key<<" ";
-				t=t->link;
+				cout<<"Roll No: "<<t->roll<<endl;
+				cout<<"Marks: "<<t->marks<<endl;
+				cout<<"Name: "<<t->name<<endl;
+				cout<<"Year: "<<t->year<<"\n\n";
+				t = t->link;
 			}
 
 		}
 	}
-	cout<<"\n";
-}
-int main()
-{
-	bucket_sort S;
-	S.size_init();
-	S.read_input();
-	S.getMax();
-	S.insert_keys();
-	S.display();
 }
