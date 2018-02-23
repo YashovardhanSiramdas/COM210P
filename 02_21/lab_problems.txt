@@ -1,3 +1,8 @@
 (i) 0-1 knapsack, Greedy on Price
-(i) 0-1 knapsack, Greedy on Price/Weight
-(i) Fractional Knapsack, Greedy on Price/Weight
+(ii) 0-1 knapsack, Greedy on Price/Weight
+(iii) Fractional Knapsack, Greedy on Price/Weight
+Above three Algos in O(NlogN)  (pseudo polynomial)
+
+Extra Credit:-
+
+Fractional Knapsack, Greedy on Price/Weight in O(N)
