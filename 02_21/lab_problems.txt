@@ -1,0 +1,3 @@
+(i) 0-1 knapsack, Greedy on Price
+(i) 0-1 knapsack, Greedy on Price/Weight
+(i) Fractional Knapsack, Greedy on Price/Weight

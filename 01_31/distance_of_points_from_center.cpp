@@ -1,9 +1,11 @@
+//BUG IN THE CODE
+
 /*
 Author:- Yashovardhan Siramdas
 CED16I028
 
 Lab Session 5, 31-01-18
-Application of Bucket Sort
+Application of Bucket Sort (Extra Credit)
 Given n ordered pairs (xi,yi) inside the circle x^2 + y^2 =1,find the ascending order of these points based on distance from center
 */
 
@@ -30,7 +32,7 @@ int main()
 	{
 		struct point *p=(struct point *)malloc(sizeof(struct point));
 		cin>>p->x>>p->y;
-		p->res=sqrt((p->x * p->x) + (p->y * p->y));
+		p->res=((p->x * p->x) + (p->y * p->y));
 		p->res = p->res*10;
 		int x = p->res;
 			if(head[x] == NULL)
@@ -40,15 +42,15 @@ int main()
 				struct point *t = head[x];
 				while(t != NULL)
 				{
-					if(p->res<t->res && p->res<t->link->res)
+					if(p->res<t->res && t->link==NULL)
 					{
+						
 						break;
 					}
 					t=t->link;
 				}
 				p->link=t->link;
 				t->link=p;
-
 			}
 
 	}
