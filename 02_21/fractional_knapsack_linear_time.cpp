@@ -190,7 +190,7 @@ int main()
 	int k = n;  //k is nth minimum or 1st maximum
 	while(k >= 1)
 	{
-		int index=selectKth(0, n - 1, k);
+		int index=selectKth(0, k - 1, k);
 		if(currentWeight + o[index].getWeight() <= m)
 		{
 			currentWeight += o[index].getWeight();
