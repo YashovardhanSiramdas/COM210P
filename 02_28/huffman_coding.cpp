@@ -1,3 +1,12 @@
+/*
+Author:- Yashovardhan Siramdas
+CED16I028
+
+Lab Session 8, 28-02-18
+
+Huffman Coding
+*/
+
 #include <iostream>
 #include <stdlib.h>
 

@@ -1,3 +1,12 @@
+/*
+Author:- Yashovardhan Siramdas
+CED16I028
+
+Lab Session 7, 21-02-18
+
+Fractional Knapsack(Greedy on Profit / Size)
+*/
+
 #include <iostream>
 using namespace std;
 
