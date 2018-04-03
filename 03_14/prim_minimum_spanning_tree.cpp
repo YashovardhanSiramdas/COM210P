@@ -1,76 +1,114 @@
- #include <stdio.h>
-#include <limits.h>
+/*
+Author:- Yashovardhan Siramdas
+CED16I028
 
-#define V 5
+Lab Session 10, 14-03-18
 
-int minKey(int key[], bool mstSet[])
+Prim's Minimum Spanning Tree
+Input each value of cost matrix as the cost of edge between two nodes.If there is no edge between two nodes,input as -1
+*/
+
+#include <iostream>
+#include <climits>
+using namespace std;
+
+int find_min_edge(int *k, int *l, int n, int c[][1024], int *e)
 {
-   int min = INT_MAX, min_index;
- 
-   for (int v = 0; v < V; v++)
-     if (mstSet[v] == false && key[v] < min)
-         min = key[v], min_index = v;
- 
-   return min_index;
+	int min = INT_MAX;
+	for(int i = 0; i < n; i++)
+		for(int j = 0; j < n; j++)
+		{
+			if(c[i][j] < min)
+			{
+				min = c[i][j];
+				*k = i;
+				*l = j;
+			}
+		}
+	*e = *e - 1;
+	return min;
 }
 
-int printMST(int parent[], int n, int graph[V][V])
+int new_edge(int c[][1024], int near[], int n, int *e)
 {
-   printf("Edge   Weight\n");
-   for (int i = 1; i < V; i++)
-      printf("%d - %d    %d \n", parent[i], i, graph[i][parent[i]]);
+	int min = INT_MAX, j;
+	for(int i = 0; i < n; i++)
+	{
+		if(near[i] != 0 && c[i][near[i]] < min)
+		{
+			min = c[i][near[i]];
+			j = i;
+
+		}
+	}
+	*e = *e - 1;
+	return j;
 }
 
-void primMST(int graph[V][V])
-{
-     int parent[V]; // Array to store constructed MST
-     int key[V];   // Key values used to pick minimum weight edge in cut
-     bool mstSet[V];  // To represent set of vertices not yet included in MST
-
-     for (int i = 0; i < V; i++)
-        key[i] = INT_MAX, mstSet[i] = false;
-
-     key[0] = 0;     // Make key 0 so that this vertex is picked as first vertex
-     parent[0] = -1; // First node is always root of MST 
-
-     for (int count = 0; count < V-1; count++)
-     {
-        // Pick the minimum key vertex from the set of vertices
-        // not yet included in MST
-        int u = minKey(key, mstSet);
- 
-        // Add the picked vertex to the MST Set
-        mstSet[u] = true;
- 
-        // Update key value and parent index of the adjacent vertices of
-        // the picked vertex. Consider only those vertices which are not yet
-        // included in MST
-        for (int v = 0; v < V; v++)
- 
-           // graph[u][v] is non zero only for adjacent vertices of m
-           // mstSet[v] is false for vertices not yet included in MST
-           // Update the key only if graph[u][v] is smaller than key[v]
-          if (graph[u][v] && mstSet[v] == false && graph[u][v] <  key[v])
-             parent[v]  = u, key[v] = graph[u][v];
-     }
- 
-     // print the constructed MST
-     printMST(parent, V, graph);
-}
- 
- 
-// driver program to test above function
 int main()
 {
-   int graph[V][V] = {{0, 2, 0, 6, 0},
-                      {2, 0, 3, 8, 5},
-                      {0, 3, 0, 0, 7},
-                      {6, 8, 0, 0, 9},
-                      {0, 5, 7, 9, 0},
-                     };
- 
-    // Print the solution
-    primMST(graph);
- 
-    return 0;
+	int n; //nodes
+	cout<<"Enter number of nodes in graph: ";
+	cin>>n;   
+	int e=n * (n - 1);
+	int c[n][1024];  //cost matrix
+	cout<<"Enter cost matrix: \n";
+	for(int i = 0; i < n; i++)
+		for(int j = 0; j < n; j++)
+		{
+			cin>>c[i][j];
+			if(c[i][j] == -1)
+			{
+				c[i][j] = INT_MAX;
+				e--;
+			}
+		}
+
+	e = e / 2;
+			
+	int t[n - 1][2];  //output edges
+	int near[n];
+	int k, l;
+	int mincost = 0;
+	mincost += find_min_edge(&k, &l, n, c, &e);
+	t[0][0] = k;
+	t[0][1] = l;
+
+	for(int i = 0; i < n; i++)
+	{
+		if(c[i][l] < c[i][k])
+			near[i] = l;
+		else
+			near[i] = k;
+	}
+	near[k] = near[l] = 0;
+
+	int i;
+	for(i = 1;i < n - 1, e > 0; i++)
+	{
+		int j = new_edge(c, near, n, &e);
+		t[i][0] = j;
+		t[i][1] = near[j];
+		mincost += c[j][near[j]];
+		near[j] = 0;
+
+		for(int k = 0; k < n; k++)
+		{
+			if(near[k] != 0 && c[k][near[k]] > c[k][j])
+				near[k] = j;
+		}
+	}
+
+
+	if(i != n - 1)
+		cout<<"There is no spanning tree\n";
+	else
+	{
+		cout<<"MST:-\n";
+		for(int i = 0; i<n - 1; i++)
+		{
+			cout<<t[i][0]+1<<"   "<<t[i][1]+1<<"\n";
+		}
+		cout<<"Mincost: "<<mincost<<endl;
+	}
 }
