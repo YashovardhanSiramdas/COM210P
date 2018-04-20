@@ -29,10 +29,6 @@ int main()
 			i--;
 			beq = beq/2;
 		}
-		/*cout<<"Bin eq: "<<itr<<" - ";
-		for(int j=0;j<n;j++)
-			cout<<b[j];
-		cout<<endl;*/
 		int sum=0;
 		for(int j=0;j<n;j++)
 		{
@@ -46,7 +42,6 @@ int main()
 			{
 				cout<<b[j]<<" ";
 			}
-			//cout<<"itr: "<<itr;
 			cout<<endl;
 		}
 		itr--;
